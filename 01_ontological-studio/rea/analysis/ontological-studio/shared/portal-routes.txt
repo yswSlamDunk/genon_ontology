@@ -1,0 +1,2 @@
+portal/server/index.js:720:  if (url.pathname.startsWith('/api/')) {
+portal/server/index.js:739:  let file = url.pathname === '/' ? '/index.html' : url.pathname;

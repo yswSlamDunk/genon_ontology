@@ -1,0 +1,60 @@
+/* 이 파일은 admin-ds-brand 가 생성했습니다 — 직접 고치지 말고 설정을 바꾼 뒤 다시 생성하세요.
+ * 설정: ../admin-ds.brand.json · 대표 색 #0161ed
+ * 패키지 CSS(@genonai/admin-design-system/css) 다음에 import 해야 덮어씁니다. */
+:root {
+  /* core — 브랜드 스케일·투명도·그림자 */
+  --token-color-brand-25: #f7faff;
+  --token-color-brand-50: #edf4ff;
+  --token-color-brand-100: #ccdffb;
+  --token-color-brand-200: #99c0f8;
+  --token-color-brand-300: #67a0f4;
+  --token-color-brand-400: #3481f1;
+  --token-color-brand-500: #0161ed;
+  --token-color-brand-600: #014ebe;
+  --token-color-brand-700: #013a8e;
+  --token-color-brand-800: #00275f;
+  --token-color-brand-900: #00132f;
+  --token-color-alpha-brand-25: rgba(1, 97, 237, 0.03);
+  --token-color-alpha-brand-50: rgba(1, 97, 237, 0.1);
+  --token-color-alpha-brand-100: rgba(1, 97, 237, 0.25);
+  --token-color-alpha-brand-200: rgba(1, 97, 237, 0.4);
+  --token-color-alpha-brand-300: rgba(1, 97, 237, 0.6);
+  --token-shadow-primary-100-color: rgba(1, 97, 237, 0.08);
+  --token-shadow-primary-200-color: rgba(1, 97, 237, 0.16);
+  --token-shadow-primary-300-color: rgba(1, 97, 237, 0.24);
+  --token-shadow-primary-400-color: rgba(1, 97, 237, 0.32);
+
+  /* semantic — 브랜드를 참조하는 토큰 */
+  --token-color-text-brand-default: #0161ed;
+  --token-color-text-brand-hover: #014ebe;
+  --token-color-text-brand-subtle: #67a0f4;
+  --token-color-background-default: #f7faff;
+  --token-color-surface-brand-default: #0161ed;
+  --token-color-surface-brand-subtle: rgba(1, 97, 237, 0.1);
+  --token-color-surface-brand-subtlest: rgba(1, 97, 237, 0.03);
+  --token-color-surface-brand-muted: rgba(1, 97, 237, 0.25);
+  --token-color-surface-brand-strongest: #00275f;
+  --token-color-surface-brand-strong: #014ebe;
+  --token-color-surface-brand-stronger: #013a8e;
+  --token-color-action-primary-default: #0161ed;
+  --token-color-action-primary-hover: #014ebe;
+  --token-color-action-primary-subtle-hover: rgba(1, 97, 237, 0.25);
+  --token-color-action-primary-subtle: rgba(1, 97, 237, 0.1);
+  --token-color-border-primary-subtle-hover: #99c0f8;
+  --token-color-border-primary-default: #0161ed;
+  --token-color-border-primary-hover: #014ebe;
+  --token-color-border-primary-subtle: #ccdffb;
+  --token-color-icon-brand-default: #0161ed;
+  --token-color-icon-brand-hover: #014ebe;
+  --token-shadow-brand-sm-color: rgba(1, 97, 237, 0.08);
+  --token-shadow-brand-md-color: rgba(1, 97, 237, 0.16);
+  --token-shadow-brand-lg-color: rgba(1, 97, 237, 0.24);
+  --token-shadow-brand-xl-color: rgba(1, 97, 237, 0.32);
+
+  /* logo — <Logo> 가 읽는다 */
+  --token-brand-logo: url('./brand/gentology-logo.svg');
+  --token-brand-logo-inverse: url('./brand/gentology-logo-white.svg');
+  --token-brand-logo-aspect-ratio: 640 / 120;
+  --token-brand-logo-display: inline-block;
+  --token-brand-fallback-display: none;
+}

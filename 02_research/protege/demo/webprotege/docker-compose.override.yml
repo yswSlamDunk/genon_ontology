@@ -1,0 +1,19 @@
+# macOS 로컬 실행용 오버라이드
+# - 5000 포트는 macOS AirPlay 수신기가 사용 → 5050으로 변경
+# - ~/Desktop 하위 bind mount 시 MongoDB 파일 권한 오류 → Docker named volume 사용
+# - 공식 이미지가 amd64 전용 → Apple Silicon에서 에뮬레이션 실행 명시
+services:
+  webprotege:
+    platform: linux/amd64
+    ports: !override
+      - 5050:8080
+    volumes: !override
+      - wp-data:/srv/webprotege
+  wpmongo:
+    platform: linux/amd64
+    volumes: !override
+      - wp-mongo:/data/db
+
+volumes:
+  wp-data:
+  wp-mongo:

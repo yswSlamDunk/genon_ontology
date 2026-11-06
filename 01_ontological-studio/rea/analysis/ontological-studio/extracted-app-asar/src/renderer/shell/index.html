@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Ontological Studio</title>
+<link rel="stylesheet" href="shell.css">
+<script>
+  // before paint: the same theme setting Studio uses (same origin)
+  try { const t = localStorage.getItem('os-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t } catch {}
+</script>
+</head>
+<body>
+  <header id="strip">
+    <div id="lights"></div>
+    <nav id="tabs" role="tablist"></nav>
+    <button id="new-tab" class="strip-btn" title="홈 — 새로 열 것 고르기 (⌘T)" aria-label="새 탭"></button>
+    <div class="strip-fill"></div>
+    <div class="strip-right">
+      <button class="strip-btn" id="btn-theme" title="라이트/다크"></button>
+      <button class="strip-btn" id="btn-window" title="새 창 (⌘N)"></button>
+    </div>
+  </header>
+
+  <div id="home">
+    <aside class="side">
+      <div class="brand">
+        <img class="brand-lockup" src="/brand-lockup.svg" alt="Ontological Studio">
+      </div>
+      <nav class="side-nav" id="side-nav"></nav>
+      <div class="side-sep"></div>
+      <div class="side-label">바로 열기</div>
+      <nav class="side-nav" id="side-quick"></nav>
+      <div class="side-fill"></div>
+      <div class="status" id="status"></div>
+    </aside>
+
+    <main class="main">
+      <div class="main-inner">
+        <h1 class="hello">안녕하세요.<br>무엇을 하고 싶으신가요?</h1>
+        <p class="hello-sub">Studio · Ontological DB(데이터 패브릭) · PostgreSQL · 키네틱 액션 — 모두 이 컴퓨터 안에서 돕니다.</p>
+        <div class="cards" id="cards"></div>
+
+        <div class="list-bar">
+          <div class="seg" id="seg" role="tablist"></div>
+          <label class="search"><span id="search-icon"></span><input id="q" placeholder="이름으로 찾기…" spellcheck="false"></label>
+          <span class="list-count" id="count"></span>
+        </div>
+        <div class="list">
+          <table>
+            <thead><tr><th>이름</th><th>종류</th><th>정보</th><th class="r">수정한 날짜</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+          <div class="empty" id="empty" hidden>아직 만든 것이 없습니다. 위에서 시작하세요.</div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="shell.js"></script>
+</body>
+</html>

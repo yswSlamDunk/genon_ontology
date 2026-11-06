@@ -1,0 +1,801 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --token-color-text-primary: #101318;
+  --token-color-text-secondary: #3b4656;
+  --token-color-text-inverse: #ffffff;
+  --token-color-text-brand-default: #0161ed;
+  --token-color-text-brand-hover: #014ebe;
+  --token-color-text-brand-subtle: #67a0f4;
+  --token-color-text-tertiary: #69798f;
+  --token-color-text-disabled: #a0a8b5;
+  --token-color-text-danger-default: #f05454;
+  --token-color-text-danger-hover: #c8383a;
+  --token-color-text-warning-default: #e0831f;
+  /**
+   * 경고 텍스트 호버 색상. Admin / User 프로젝트별 값이 다릅니다.
+   * 
+   * 🔗 Core: User → color/yellow/600 / Admin → color/yellow/800
+   * 📦 Category: Color > Text
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 텍스트 호버, 경고 메시지 텍스트 호버
+   * ⚠️ 변경 시 영향: Warning 계열 텍스트 호버 상태 (Mode별 확인 필요)
+   */
+  --token-color-text-warning-hover: #ad6514;
+  --token-color-text-success-default: #28c76f;
+  /**
+   * 성공 텍스트 호버 색상.
+   * 
+   * 🔗 Core: color/green/600
+   * 📦 Category: Color > Text
+   * 
+   * 🧩 Used by: Badge[Success, Ghost] 텍스트 호버, Success 상태 텍스트 호버
+   * ⚠️ 변경 시 영향: Success 계열 텍스트 호버 상태
+   */
+  --token-color-text-success-hover: #219e64;
+  --token-color-text-info-default: #4d7cfe;
+  /**
+   * 정보 텍스트 호버 색상.
+   * 
+   * 🔗 Core: color/blue/600
+   * 📦 Category: Color > Text
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 텍스트 호버, Info 상태 텍스트 호버
+   * ⚠️ 변경 시 영향: Info 계열 텍스트 호버 상태
+   */
+  --token-color-text-info-hover: #3a62d1;
+  --token-color-text-category-default: #a560e8;
+  /**
+   * 정보 텍스트 호버 색상.
+   * 
+   * 🔗 Core: color/blue/600
+   * 📦 Category: Color > Text
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 텍스트 호버, Info 상태 텍스트 호버
+   * ⚠️ 변경 시 영향: Info 계열 텍스트 호버 상태
+   */
+  --token-color-text-category-hover: #8441c7;
+  /**
+   * 페이지 전체의 기본 배경색.
+   * 
+   * 🔗 Core: color/brand/25
+   * 📦 Category: Color > Background
+   * 
+   * 🧩 Used by: 전체 페이지 배경 (전역 적용)
+   * ⚠️ 변경 시 영향: 전체 화면 배경색 변경. 텍스트 대비비(WCAG AA) 재검증 필요.
+   */
+  --token-color-background-default: #f7faff;
+  --token-color-surface-default: #ffffff;
+  --token-color-surface-brand-default: #0161ed;
+  --token-color-surface-brand-subtle: rgba(1, 97, 237, 0.1);
+  --token-color-surface-brand-subtlest: rgba(1, 97, 237, 0.03);
+  --token-color-surface-brand-muted: rgba(1, 97, 237, 0.25);
+  --token-color-surface-brand-strongest: #00275f;
+  --token-color-surface-brand-strong: #014ebe;
+  --token-color-surface-brand-stronger: #013a8e;
+  /**
+   * 흰색 투명 표면. 인터랙션 요소의 기본(Default) 상태 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/transparent/white
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Button[Primary/Secondary/Danger, Outlined/Ghost, Default], Dropdown Item[Secondary/Danger, Default]
+   * ⚠️ 변경 시 영향: 다수 컴포넌트 Default 상태 배경
+   */
+  --token-color-surface-transparent-white: rgba(255, 255, 255, 0);
+  /**
+   * 검정 투명 표면. 어두운 오버레이 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/transparent/black
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 오버레이 배경, 모달 딤 처리
+   * ⚠️ 변경 시 영향: 오버레이 가시성
+   */
+  --token-color-surface-transparent-black: rgba(0, 0, 0, 0);
+  --token-color-surface-subtle: rgba(99, 117, 143, 0.08);
+  --token-color-surface-muted: rgba(99, 117, 143, 0.14);
+  --token-color-surface-danger-default: #f05454;
+  --token-color-surface-danger-subtle: rgba(240, 84, 84, 0.1);
+  --token-color-surface-danger-muted: rgba(240, 84, 84, 0.25);
+  --token-color-surface-danger-strongest: #651a1c;
+  --token-color-surface-danger-stronger: #962628;
+  --token-color-surface-danger-strong: #c8383a;
+  --token-color-surface-danger-subtlest: rgba(240, 84, 84, 0.03);
+  --token-color-surface-strongest: #252b34;
+  --token-color-surface-strong: #516174;
+  --token-color-surface-stronger: #3b4656;
+  --token-color-surface-subtlest: rgba(99, 117, 143, 0.03);
+  --token-color-surface-success-subtlest: rgba(40, 199, 111, 0.03);
+  --token-color-surface-success-subtle: rgba(40, 199, 111, 0.1);
+  --token-color-surface-success-muted: rgba(40, 199, 111, 0.25);
+  --token-color-surface-success-default: #28c76f;
+  --token-color-surface-success-strong: #219e64;
+  --token-color-surface-success-stronger: #1a7a4e;
+  --token-color-surface-success-strongest: #125236;
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-warning-subtlest: rgba(255, 159, 67, 0.03);
+  --token-color-surface-warning-subtle: rgba(255, 159, 67, 0.1);
+  /**
+   * 중간 경고 상태 배경. subtle보다 진하고 default보다 연한 단계.
+   * 
+   * 🔗 Core: color/alpha/yellow/100
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 경고 강조 영역 배경
+   * ⚠️ 변경 시 영향: Warning 계열 중간 배경
+   */
+  --token-color-surface-warning-muted: rgba(255, 159, 67, 0.25);
+  /**
+   * 기본 경고 상태 배경. solid 색상 기반의 경고 강조 배경.
+   * 
+   * 🔗 Core: color/yellow/500
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 경고 상태 강조 배경, Warning 배지 solid 배경
+   * ⚠️ 변경 시 영향: Warning 계열 기본 배경
+   */
+  --token-color-surface-warning-default: #ff9f43;
+  /**
+   * 강한 경고 상태 배경. 경고 표시를 강하게 강조할 때 사용.
+   * 
+   * 🔗 Core: color/yellow/600
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 경고 강조 영역 (강)
+   * ⚠️ 변경 시 영향: Warning 계열 강한 배경
+   */
+  --token-color-surface-warning-strong: #e0831f;
+  /**
+   * 더 강한 경고 상태 배경.
+   * 
+   * 🔗 Core: color/yellow/700
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 경고 강조 영역 (더 강)
+   * ⚠️ 변경 시 영향: Warning 계열 강한 배경 상위 단계
+   */
+  --token-color-surface-warning-stronger: #ad6514;
+  /**
+   * 가장 강한 경고 상태 배경. 7단계 중 최상위.
+   * 
+   * 🔗 Core: color/yellow/800
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 경고 강조 영역 (최강)
+   * ⚠️ 변경 시 영향: Warning 계열 최상위 배경
+   */
+  --token-color-surface-warning-strongest: #75440c;
+  --token-color-surface-info-subtlest: rgba(77, 124, 254, 0.03);
+  /**
+   * 연한 정보 상태 배경. 정보 배지, 알림 영역의 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/blue/50
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 배경, 정보 알림 영역
+   * ⚠️ 변경 시 영향: Info 계열 연한 배경 전체
+   */
+  --token-color-surface-info-subtle: rgba(77, 124, 254, 0.1);
+  /**
+   * 중간 정보 상태 배경. subtle보다 진하고 default보다 연한 단계.
+   * 
+   * 🔗 Core: color/alpha/blue/100
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 정보 강조 영역 배경
+   * ⚠️ 변경 시 영향: Info 계열 중간 배경
+   */
+  --token-color-surface-info-muted: rgba(77, 124, 254, 0.25);
+  /**
+   * 기본 정보 상태 배경. solid 색상 기반의 정보 강조 배경.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 정보 상태 강조 배경, Info 배지 solid 배경
+   * ⚠️ 변경 시 영향: Info 계열 기본 배경
+   */
+  --token-color-surface-info-default: #4d7cfe;
+  /**
+   * 강한 정보 상태 배경. 정보 표시를 강하게 강조할 때 사용.
+   * 
+   * 🔗 Core: color/blue/600
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 정보 강조 영역 (강)
+   * ⚠️ 변경 시 영향: Info 계열 강한 배경
+   */
+  --token-color-surface-info-strong: #3a62d1;
+  /**
+   * 더 강한 정보 상태 배경.
+   * 
+   * 🔗 Core: color/blue/700
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 정보 강조 영역 (더 강)
+   * ⚠️ 변경 시 영향: Info 계열 강한 배경 상위 단계
+   */
+  --token-color-surface-info-stronger: #294aa1;
+  /**
+   * 가장 강한 정보 상태 배경. 7단계 중 최상위.
+   * 
+   * 🔗 Core: color/blue/800
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: 정보 강조 영역 (최강)
+   * ⚠️ 변경 시 영향: Info 계열 최상위 배경
+   */
+  --token-color-surface-info-strongest: #1a3373;
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-category-subtlest: rgba(165, 96, 232, 0.03);
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-category-subtle: rgba(165, 96, 232, 0.1);
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-category-muted: rgba(165, 96, 232, 0.25);
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-category-default: #a560e8;
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-category-strong: #8441c7;
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-category-stronger: #632e98;
+  /**
+   * 가장 연한 경고 상태 배경. 경고 배지, 알림 영역의 가장 옅은 배경에 사용.
+   * 
+   * 🔗 Core: color/alpha/yellow/25
+   * 📦 Category: Color > Surface
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 가장 연한 배경, 경고 알림 영역
+   * ⚠️ 변경 시 영향: Warning 계열 가장 연한 배경
+   */
+  --token-color-surface-category-strongest: #421d66;
+  --token-color-action-primary-default: #0161ed;
+  --token-color-action-primary-hover: #014ebe;
+  --token-color-action-primary-subtle-hover: rgba(1, 97, 237, 0.25);
+  --token-color-action-primary-subtle: rgba(1, 97, 237, 0.1);
+  --token-color-action-secondary-default: #3b4656;
+  --token-color-action-secondary-hover: #252b34;
+  --token-color-action-danger-default: #f05454;
+  --token-color-action-danger-hover: #c8383a;
+  --token-color-action-danger-subtle-hover: rgba(240, 84, 84, 0.25);
+  --token-color-action-danger-subtle: rgba(240, 84, 84, 0.1);
+  --token-color-action-tertiary-default: #f6f7f8;
+  --token-color-action-tertiary-hover: #eceef2;
+  --token-color-action-tertiary-subtle: rgba(99, 117, 143, 0.08);
+  --token-color-action-tertiary-subtle-hover: rgba(99, 117, 143, 0.14);
+  --token-color-action-transparent-white: rgba(255, 255, 255, 0);
+  /**
+   * 비활성화 상태의 배경색. Admin과 User 프로젝트에서 값이 다릅니다.
+   * 
+   * 🔗 Core: Admin → color/alpha/transparent/white / User → color/neutral/100
+   * 📦 Category: Color > Action
+   * 
+   * 🧩 Used by: Button[*, Solid/Outlined/Ghost, Disabled], Button[*, Solid, Loading], Icon Button[*, *, Disabled]
+   * ⚠️ 변경 시 영향: 2개 컴포넌트. Admin/User Mode에서 시각적 차이 발생 (투명 vs 회색)
+   */
+  --token-color-action-disabled: rgba(99, 117, 143, 0.03);
+  --token-color-action-white-white: #ffffff;
+  --token-color-border-danger-default: #f05454;
+  --token-color-border-danger-hover: #c8383a;
+  --token-color-border-default: #eceef2;
+  --token-color-border-subtle: #f6f7f8;
+  --token-color-border-tertiary-hover: #bec5cf;
+  --token-color-border-tertiary-default: #d9dde3;
+  /**
+   * Primary Outlined 버튼 호버 시 테두리 색상.
+   * 
+   * 🔗 Core: color/brand/200
+   * 📦 Category: Color > Border
+   * 
+   * 🧩 Used by: Button[Primary, Outlined, Hovered], Icon Button[Primary, Outlined, Hovered]
+   * ⚠️ 변경 시 영향: 2개 컴포넌트, Outlined 호버 상태
+   */
+  --token-color-border-primary-subtle-hover: #99c0f8;
+  --token-color-border-primary-default: #0161ed;
+  --token-color-border-primary-hover: #014ebe;
+  --token-color-border-primary-subtle: #ccdffb;
+  --token-color-border-disabled: #eceef2;
+  --token-color-border-input-focus: #69798f;
+  --token-color-border-input-default: #bec5cf;
+  /**
+   * 어두운 배경 위에 사용하는 흰색 테두리.
+   * 
+   * 🔗 Core: color/white
+   * 📦 Category: Color > Border
+   * 
+   * 🧩 Used by: 어두운 배경(Toast, 다크 Surface) 위 컴포넌트 테두리
+   * ⚠️ 변경 시 영향: 어두운 배경 위 border 전체
+   */
+  --token-color-border-inverse: #ffffff;
+  --token-color-border-info-subtle: #d1deff;
+  /**
+   * Primary Outlined 버튼 호버 시 테두리 색상.
+   * 
+   * 🔗 Core: color/brand/200
+   * 📦 Category: Color > Border
+   * 
+   * 🧩 Used by: Button[Primary, Outlined, Hovered], Icon Button[Primary, Outlined, Hovered]
+   * ⚠️ 변경 시 영향: 2개 컴포넌트, Outlined 호버 상태
+   */
+  --token-color-border-info-subtle-hover: #a8beff;
+  --token-color-border-info-default: #4d7cfe;
+  --token-color-border-info-hover: #3a62d1;
+  --token-color-border-success-default: #28c76f;
+  --token-color-border-success-hover: #219e64;
+  --token-color-border-warning-default: #ff9f43;
+  --token-color-border-warning-hover: #e0831f;
+  --token-color-border-category-default: #a560e8;
+  --token-color-border-category-hover: #8441c7;
+  --token-color-border-hover: #d9dde3;
+  --token-color-icon-primary: #101318;
+  --token-color-icon-secondary: #3b4656;
+  --token-color-icon-tertiary: #69798f;
+  --token-color-icon-inverse: #ffffff;
+  --token-color-icon-brand-default: #0161ed;
+  --token-color-icon-brand-hover: #014ebe;
+  --token-color-icon-danger-default: #f05454;
+  --token-color-icon-danger-hover: #c8383a;
+  --token-color-icon-danger-muted: rgba(240, 84, 84, 0.25);
+  --token-color-icon-disabled: #a0a8b5;
+  --token-color-icon-success-default: #28c76f;
+  --token-color-icon-success-hover: #219e64;
+  --token-color-icon-subtle: #d9dde3;
+  --token-color-icon-muted: #bec5cf;
+  /**
+   * 경고 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/yellow/600
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 아이콘, 경고 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 경고 아이콘 전체
+   */
+  --token-color-icon-warning-default: #ff9f43;
+  /**
+   * 경고 상태 아이콘 호버 색상.
+   * 
+   * 🔗 Core: color/yellow/600
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Warning, Ghost] 아이콘 호버
+   * ⚠️ 변경 시 영향: 경고 아이콘 호버 상태
+   */
+  --token-color-icon-warning-hover: #e0831f;
+  /**
+   * 정보 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 아이콘, 정보 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 정보 아이콘 전체
+   */
+  --token-color-icon-info-subtlest: #e8efff;
+  /**
+   * 정보 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 아이콘, 정보 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 정보 아이콘 전체
+   */
+  --token-color-icon-info-hover: #3a62d1;
+  /**
+   * 정보 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 아이콘, 정보 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 정보 아이콘 전체
+   */
+  --token-color-icon-info-default: #4d7cfe;
+  /**
+   * 정보 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 아이콘, 정보 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 정보 아이콘 전체
+   */
+  --token-color-icon-info-subtle: #d1deff;
+  /**
+   * 정보 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 아이콘, 정보 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 정보 아이콘 전체
+   */
+  --token-color-icon-info-muted: #a8beff;
+  /**
+   * 정보 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 아이콘, 정보 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 정보 아이콘 전체
+   */
+  --token-color-icon-category-default: #a560e8;
+  /**
+   * 정보 상태 아이콘 기본 색상.
+   * 
+   * 🔗 Core: color/blue/500
+   * 📦 Category: Color > Icon
+   * 
+   * 🧩 Used by: Badge[Info, Ghost] 아이콘, 정보 상태 표시 아이콘
+   * ⚠️ 변경 시 영향: 정보 아이콘 전체
+   */
+  --token-color-icon-category-hover: #8441c7;
+  --token-color-syntax-text: #1f2328;
+  --token-color-syntax-comment: #6e7781;
+  --token-color-syntax-keyword: #cf222e;
+  --token-color-syntax-operator: #0550ae;
+  --token-color-syntax-string: #0a3069;
+  --token-color-syntax-constant: #0550ae;
+  --token-color-syntax-function: #8250df;
+  --token-color-syntax-variable: #953800;
+  --token-color-syntax-tag: #116329;
+  --token-shadow-default-sm-color: rgba(0, 0, 0, 0.08);
+  --token-shadow-default-sm-offset-x: 0px;
+  --token-shadow-default-sm-blur: 4px;
+  --token-shadow-default-sm-offset-y: 0px;
+  --token-shadow-default-md-color: rgba(0, 0, 0, 0.12);
+  --token-shadow-default-md-offset-x: 0px;
+  --token-shadow-default-md-offset-y: 0px;
+  --token-shadow-default-md-blur: 8px;
+  --token-shadow-default-lg-color: rgba(0, 0, 0, 0.16);
+  --token-shadow-default-lg-offset-x: 0px;
+  --token-shadow-default-lg-offset-y: 0px;
+  --token-shadow-default-lg-blur: 12px;
+  --token-shadow-default-xl-color: rgba(0, 0, 0, 0.2);
+  --token-shadow-default-xl-offset-x: 0px;
+  --token-shadow-default-xl-offset-y: 0px;
+  --token-shadow-default-xl-blur: 16px;
+  --token-shadow-brand-sm-color: rgba(1, 97, 237, 0.08);
+  --token-shadow-brand-sm-offset-x: 0px;
+  --token-shadow-brand-sm-offset-y: 0px;
+  --token-shadow-brand-sm-blur: 4px;
+  --token-shadow-brand-md-color: rgba(1, 97, 237, 0.16);
+  --token-shadow-brand-md-offset-x: 0px;
+  --token-shadow-brand-md-offset-y: 0px;
+  --token-shadow-brand-md-blur: 8px;
+  --token-shadow-brand-lg-color: rgba(1, 97, 237, 0.24);
+  --token-shadow-brand-lg-offset-x: 0px;
+  --token-shadow-brand-lg-offset-y: 0px;
+  --token-shadow-brand-lg-blur: 12px;
+  --token-shadow-brand-xl-color: rgba(1, 97, 237, 0.32);
+  --token-shadow-brand-xl-offset-x: 0px;
+  --token-shadow-brand-xl-offset-y: 0px;
+  --token-shadow-brand-xl-blur: 16px;
+  --token-overlay-light-background: rgba(0, 0, 0, 0.08);
+  --token-overlay-light-blur: 2px;
+  --token-overlay-medium-background: rgba(0, 0, 0, 0.25);
+  --token-overlay-medium-blur: 4px;
+  --token-overlay-strong-background: rgba(0, 0, 0, 0.5);
+  --token-overlay-strong-blur: 6px;
+  --token-overlay-scrim-background: rgba(0, 0, 0, 0.7);
+  --token-overlay-scrim-blur: 8px;
+  --token-motion-duration-standard-duration: 300ms;
+  --token-motion-duration-standard-easing: ease-in-out;
+  --token-motion-presence-enter-fade-duration: 300ms;
+  --token-motion-presence-enter-fade-easing: ease-in;
+  --token-motion-presence-enter-slide-up-duration: 300ms;
+  --token-motion-presence-enter-slide-up-easing: ease-in;
+  --token-motion-presence-enter-slide-down-duration: 300ms;
+  --token-motion-presence-enter-slide-down-easing: ease-in;
+  --token-motion-presence-enter-scale-duration: 300ms;
+  --token-motion-presence-enter-scale-easing: ease-in;
+  --token-motion-presence-enter-drawer-duration: 500ms;
+  --token-motion-presence-enter-drawer-easing: ease-in;
+  --token-motion-presence-exit-fade-duration: 150ms;
+  --token-motion-presence-exit-fade-easing: ease-out;
+  --token-motion-presence-exit-slide-up-duration: 300ms;
+  --token-motion-presence-exit-slide-up-easing: ease-out;
+  --token-motion-presence-exit-slide-down-duration: 300ms;
+  --token-motion-presence-exit-slide-down-easing: ease-out;
+  --token-motion-presence-exit-scale-duration: 150ms;
+  --token-motion-presence-exit-scale-easing: ease-out;
+  --token-motion-presence-exit-drawer-duration: 500ms;
+  --token-motion-presence-exit-drawer-easing: ease-out;
+  --token-motion-interaction-hover-duration: 150ms;
+  --token-motion-interaction-hover-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --token-motion-interaction-focus-duration: 300ms;
+  --token-motion-interaction-focus-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --token-motion-interaction-feedback-duration: 300ms;
+  --token-motion-interaction-feedback-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --token-motion-sequence-short: 50ms;
+  --token-motion-sequence-medium: 100ms;
+  --token-motion-sequence-long: 200ms;
+  --token-radius-md: 12px;
+  --token-radius-lg: 16px;
+  --token-radius-xl: 24px;
+  --token-radius-sm: 8px;
+  --token-radius-xxs: 4px;
+  --token-radius-xs: 6px;
+  --token-radius-full: 99999px;
+  --token-radius-none: 0px;
+  --token-opacity-overlay: 100%;
+  --token-opacity-hidden: 0%;
+  /**
+   * 연한 오버레이에 사용하는 투명도.
+   * 
+   * 🔗 Core: opacity/40
+   * 📦 Category: Opacity
+   * 
+   * 🧩 Used by: 연한 딤 처리 오버레이, 배경 흐림 효과
+   * ⚠️ 변경 시 영향: 연한 오버레이 전체 투명도
+   */
+  --token-opacity-overlay-light: 40%;
+  --token-spacing-inline-xs: 4px;
+  --token-spacing-inline-sm: 8px;
+  --token-spacing-inline-md: 12px;
+  --token-spacing-inline-lg: 16px;
+  --token-spacing-inline-xl: 20px;
+  --token-spacing-inline-xxl: 24px;
+  --token-spacing-inline-xxxl: 32px;
+  --token-spacing-inline-xxs: 2px;
+  --token-spacing-inline-none: 0px;
+  --token-spacing-stack-xs: 4px;
+  --token-spacing-stack-sm: 8px;
+  --token-spacing-stack-md: 12px;
+  --token-spacing-stack-lg: 16px;
+  --token-spacing-stack-xl: 24px;
+  --token-spacing-stack-xxl: 32px;
+  --token-spacing-stack-xxs: 2px;
+  --token-spacing-stack-none: 0px;
+  --token-spacing-stack-xxxl: 40px;
+  --token-spacing-stack-xxxxl: 64px;
+  --token-spacing-group-xxs: 2px;
+  --token-spacing-group-xs: 4px;
+  --token-spacing-group-sm: 8px;
+  --token-spacing-group-lg: 16px;
+  --token-spacing-group-xl: 24px;
+  --token-spacing-group-xxl: 32px;
+  --token-spacing-group-md: 12px;
+  --token-spacing-group-xxxl: 40px;
+  --token-spacing-group-xxxxl: 56px;
+  --token-spacing-group-none: 0px;
+  --token-size-icon-sm: 16px;
+  --token-size-icon-md: 20px;
+  --token-size-icon-lg: 24px;
+  --token-size-icon-xs: 12px;
+  --token-size-icon-xl: 32px;
+  --token-size-icon-xxs: 8px;
+  --token-size-icon-xxl: 48px;
+  --token-size-icon-xxxl: 80px;
+  --token-size-icon-xxxs: 4px;
+  --token-size-control-lg: 44px;
+  --token-size-control-md: 36px;
+  --token-size-control-sm: 32px;
+  --token-size-control-xs: 28px;
+  --token-size-control-xxxs: 20px;
+  --token-size-control-xl: 56px;
+  --token-size-control-xxs: 24px;
+  --token-size-control-xxxl: 360px;
+  --token-size-control-xxl: 72px;
+  --token-size-control-xxxxl: 420px;
+  --token-size-container-modal-width-sm: 360px; /** 알림 패널 */
+  --token-size-container-modal-width-md: 480px; /** 상세 조회,인라인 편집 */
+  --token-size-container-modal-width-lg: 640px; /** 테이블 포함 */
+  --token-size-container-modal-width-xl: 800px; /** 테이블 포함 */
+  --token-size-image-sm: 80px;
+  --token-size-image-lg: 120px;
+  --token-size-image-xxl: 320px;
+  --token-size-image-xl: 200px;
+  --token-size-image-xs: 56px;
+  --token-size-image-xxs: 36px;
+  --token-size-image-md: 100px;
+  --token-size-container-pannel-width-sm: 360px;
+  --token-size-container-pannel-width-md: 480px;
+  --token-size-container-pannel-width-lg: 640px;
+  --token-size-container-pannel-width-xl: 800px;
+  --token-size-table-xxs: 36px; /** 아이콘 */
+  --token-size-table-xs: 44px; /** 체크박스 */
+  --token-size-table-md: 120px; /** 뱃지, 태그, 텍스트 버튼, 짧은 날짜, 제작자 */
+  --token-size-table-xl: 180px; /** 다중 태그, 긴 날짜시간, 관리그룹 */
+  --token-size-table-sm: 80px; /** 아이콘 버튼, ID 값 */
+  --token-size-table-lg: 160px; /** 칩, 숫자 지표 */
+  --token-size-table-xxl: 200px; /** 긴 텍스트 */
+  --token-layout-breakpoint-xs: 280px;
+  --token-layout-breakpoint-sm: 480px;
+  --token-layout-breakpoint-md: 767px;
+  --token-layout-breakpoint-lg: 1024px;
+  --token-layout-container-column-sm: 2px;
+  --token-layout-container-column-md: 3px;
+  --token-layout-container-column-lg: 12px;
+  --token-layout-container-margin-sm: 16px;
+  --token-layout-container-margin-md: 24px;
+  --token-layout-container-margin-lg: 24px; /** 데스크탑 마진 값 */
+  --token-layout-section-base: 32px;
+  --token-layout-section-narrow: 24px;
+  --token-layout-section-wide: 40px;
+  --token-layout-width-panel: 380px;
+  --token-layout-max-width-content: 1200px;
+  --token-layout-max-width-login: 480px;
+  --token-layout-max-width-form: 720px; /** 문서, 텍스트 리스트 */
+  --token-layout-max-width-wide: 1440px; /** 테이블,대시보드 */
+  --token-layout-min-width-supported: 1280px;
+  --token-border-style-default-style: solid;
+  --token-border-style-default-width: 1px;
+  --token-border-style-dashed-style: dashed;
+  --token-border-style-dashed-width: 1px;
+  --token-border-style-strong-style: solid;
+  --token-border-style-strong-width: 2px;
+  --token-border-style-none-style: none;
+  --token-border-style-none-width: 0px;
+  --token-typography-display-sm-size: 28px;
+  --token-typography-display-sm-weight: 700;
+  --token-typography-display-sm-line-height: 36px;
+  --token-typography-display-sm-letter-spacing: -0.4px;
+  --token-typography-display-md-size: 32px;
+  --token-typography-display-md-weight: 700;
+  --token-typography-display-md-line-height: 40px;
+  --token-typography-display-md-letter-spacing: -0.5px;
+  --token-typography-headline-xl-size: 24px;
+  --token-typography-headline-xl-weight: 700;
+  --token-typography-headline-xl-line-height: 32px;
+  --token-typography-headline-xl-letter-spacing: -0.3px;
+  --token-typography-headline-lg-size: 20px;
+  --token-typography-headline-lg-weight: 700;
+  --token-typography-headline-lg-line-height: 28px;
+  --token-typography-headline-lg-letter-spacing: -0.2px;
+  --token-typography-headline-md-size: 18px;
+  --token-typography-headline-md-weight: 700;
+  --token-typography-headline-md-line-height: 26px;
+  --token-typography-headline-md-letter-spacing: -0.1px;
+  --token-typography-headline-sm-size: 16px;
+  --token-typography-headline-sm-weight: 700;
+  --token-typography-headline-sm-line-height: 24px;
+  --token-typography-headline-sm-letter-spacing: 0px;
+  --token-typography-body-lg-bold-size: 16px;
+  --token-typography-body-lg-bold-weight: 700;
+  --token-typography-body-lg-bold-line-height: 24px;
+  --token-typography-body-lg-bold-letter-spacing: 0px;
+  --token-typography-body-lg-medium-size: 16px;
+  --token-typography-body-lg-medium-weight: 500;
+  --token-typography-body-lg-medium-line-height: 24px;
+  --token-typography-body-lg-medium-letter-spacing: 0px;
+  --token-typography-body-lg-regular-size: 16px;
+  --token-typography-body-lg-regular-weight: 400;
+  --token-typography-body-lg-regular-line-height: 24px;
+  --token-typography-body-lg-regular-letter-spacing: 0px;
+  --token-typography-body-md-bold-size: 14px;
+  --token-typography-body-md-bold-weight: 700;
+  --token-typography-body-md-bold-line-height: 20px;
+  --token-typography-body-md-bold-letter-spacing: 0px;
+  --token-typography-body-md-medium-size: 14px;
+  --token-typography-body-md-medium-weight: 500;
+  --token-typography-body-md-medium-line-height: 20px;
+  --token-typography-body-md-medium-letter-spacing: 0px;
+  --token-typography-body-md-regular-size: 14px;
+  --token-typography-body-md-regular-weight: 400;
+  --token-typography-body-md-regular-line-height: 20px;
+  --token-typography-body-md-regular-letter-spacing: 0px;
+  --token-typography-body-sm-bold-size: 12px;
+  --token-typography-body-sm-bold-weight: 700;
+  --token-typography-body-sm-bold-line-height: 18px;
+  --token-typography-body-sm-bold-letter-spacing: 0px;
+  --token-typography-body-sm-medium-size: 12px;
+  --token-typography-body-sm-medium-weight: 500;
+  --token-typography-body-sm-medium-line-height: 18px;
+  --token-typography-body-sm-medium-letter-spacing: 0px;
+  --token-typography-body-sm-regular-size: 12px;
+  --token-typography-body-sm-regular-weight: 400;
+  --token-typography-body-sm-regular-line-height: 18px;
+  --token-typography-body-sm-regular-letter-spacing: 0px;
+  --token-typography-label-lg-bold-size: 16px;
+  --token-typography-label-lg-bold-weight: 700;
+  --token-typography-label-lg-bold-line-height: 24px;
+  --token-typography-label-lg-bold-letter-spacing: 0px;
+  --token-typography-label-lg-medium-size: 16px;
+  --token-typography-label-lg-medium-weight: 500;
+  --token-typography-label-lg-medium-line-height: 24px;
+  --token-typography-label-lg-medium-letter-spacing: 0px;
+  --token-typography-label-lg-regular-size: 16px;
+  --token-typography-label-lg-regular-weight: 400;
+  --token-typography-label-lg-regular-line-height: 24px;
+  --token-typography-label-lg-regular-letter-spacing: 0px;
+  --token-typography-label-md-bold-size: 14px;
+  --token-typography-label-md-bold-weight: 700;
+  --token-typography-label-md-bold-line-height: 20px;
+  --token-typography-label-md-bold-letter-spacing: 0px;
+  --token-typography-label-md-medium-size: 14px;
+  --token-typography-label-md-medium-weight: 500;
+  --token-typography-label-md-medium-line-height: 20px;
+  --token-typography-label-md-medium-letter-spacing: 0px;
+  --token-typography-label-md-regular-size: 14px;
+  --token-typography-label-md-regular-weight: 400;
+  --token-typography-label-md-regular-line-height: 20px;
+  --token-typography-label-md-regular-letter-spacing: 0px;
+  --token-typography-label-sm-bold-size: 12px;
+  --token-typography-label-sm-bold-weight: 700;
+  --token-typography-label-sm-bold-line-height: 18px;
+  --token-typography-label-sm-bold-letter-spacing: 0px;
+  --token-typography-label-sm-medium-size: 12px;
+  --token-typography-label-sm-medium-weight: 500;
+  --token-typography-label-sm-medium-line-height: 18px;
+  --token-typography-label-sm-medium-letter-spacing: 0px;
+  --token-typography-label-sm-regular-size: 12px;
+  --token-typography-label-sm-regular-weight: 400;
+  --token-typography-label-sm-regular-line-height: 18px;
+  --token-typography-label-sm-regular-letter-spacing: 0px;
+  --token-typography-label-xs-medium-size: 10px;
+  --token-typography-label-xs-medium-weight: 500;
+  --token-typography-label-xs-medium-line-height: 10px;
+  --token-typography-label-xs-medium-letter-spacing: 0px;
+  --token-typography-label-xs-regular-size: 10px;
+  --token-typography-label-xs-regular-weight: 400;
+  --token-typography-label-xs-regular-line-height: 10px;
+  --token-typography-label-xs-regular-letter-spacing: 0px;
+  --token-typography-caption-size: 12px;
+  --token-typography-caption-weight: 400;
+  --token-typography-caption-line-height: 18px;
+  --token-typography-caption-letter-spacing: 0px;
+  --token-typography-code-size: 14px;
+  --token-typography-code-weight: 400;
+  --token-typography-code-line-height: 28px;
+  --token-typography-code-letter-spacing: 0px;
+}

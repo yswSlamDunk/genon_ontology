@@ -1,0 +1,18 @@
+26:  let p = decodeURIComponent(new URL(req.url, 'http://x').pathname)
+27:  if (p === '/') p = '/index.html'
+31:  res.writeHead(200, { 'content-type': MIME[ext] || 'application/octet-stream', 'cache-control': !revalidate && p.startsWith('/assets/') ? 'max-age=31536000, immutable' : 'no-cache' })
+56:    if (u === '/lite-shell' || u.startsWith('/lite-shell/')) {
+62:    if (u === '/kinetic-idp/jwks.json') { res.writeHead(200, { 'content-type': 'application/json' }); return res.end(JSON.stringify(jwks())) }
+63:    if (!kineticOn() && req.method === 'GET' && (u === '/api/act/health' || u === '/api/act/systems')) {
+64:      res.writeHead(u === '/api/act/health' ? 200 : 503, { 'content-type': 'application/json; charset=utf-8' })
+65:      return res.end(JSON.stringify(u === '/api/act/health' ? KINETIC_ABSENT : { detail: KINETIC_ABSENT.error }))
+67:    if (u === '/app/portal-info') { res.writeHead(200, { 'content-type': 'application/json' }); return res.end(JSON.stringify({ url: `http://127.0.0.1:${ports.portal}`, graph })) }
+68:    if (u === '/app/status') { res.writeHead(200, { 'content-type': 'application/json' }); return res.end(JSON.stringify(status())) }
+69:    if (u.startsWith('/fabric-bridge/')) return bridge(req, res, u.slice('/fabric-bridge'.length))
+71:    if (codeapps && u.startsWith('/codeapps/api/')) return codeapps.handle(req, res, u.slice('/codeapps/api'.length))
+72:    if (codeapps && (u === '/apps' || u.startsWith('/apps/'))) return codeapps.serve(req, res, u.slice('/apps'.length))
+74:    if (u.startsWith('/api/gateway/data-fabric/')) return bridge(req, res, u.slice('/api/gateway/data-fabric'.length))
+75:    if (u.startsWith('/api/gateway/text2sql/')) return bridge(req, res, u.slice('/api/gateway'.length))
+76:    if (u === '/api' || u.startsWith('/api/')) return proxy(req, res, ports.backend)
+77:    if (u.startsWith('/mcp')) return proxy(req, res, ports.mcp)
+81:    if (u === '/analyzer' || u.startsWith('/analyzer/')) {

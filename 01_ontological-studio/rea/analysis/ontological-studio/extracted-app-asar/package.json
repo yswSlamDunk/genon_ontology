@@ -1,0 +1,12 @@
+{
+  "name": "ontology-studio-lite",
+  "version": "0.1.1",
+  "private": true,
+  "author": "uEngine",
+  "productName": "Ontological Studio",
+  "description": "Ontological Studio — 온톨로지 구축·질의·액션 + Ontological DB(데이터 패브릭) + PostgreSQL, Docker 없는 데스크톱 앱",
+  "main": "src/main/index.js",
+  "dependencies": {
+    "neo4j-driver": "5.28.1"
+  }
+}

@@ -1,0 +1,18 @@
+# [가상 규칙 — 실험용] 명세 2.3절 「테스트 입원일당 A」
+# 이 파일의 SHA-256이 review.rule_set_version.definition_hash 값이다.
+# 평가 로직 코드의 해시(logic_hash)는 평가 서비스를 만들 때 채운다.
+rule_code: INPATIENT-DAILY
+version: "1.0"
+clause_reference: TEST-TERMS-A-1.0
+currency: KRW
+daily_amount_krw: 100000
+max_days_per_benefit_period: 5
+waiting_days: 30
+stay_days: discharge_date - admission_date   # 입원일 포함, 퇴원일 제외. 당일 입퇴원은 0일
+period_rule: admission_date in [valid_from, valid_to) and discharge_date <= valid_to
+limit_usage: paid_days + reserved_days_of_other_claims
+required_document_types: [HOSPITALIZATION_CERTIFICATE]
+verified_fact_fields: [insured, provider_code, admission_date, discharge_date]
+timezone: Asia/Seoul
+rules: [R01_IDENTITY_MATCH, R02_COVERAGE_PERIOD, R03_WAITING_PERIOD, R04_EVIDENCE_COMPLETE,
+        R05_POSITIVE_STAY, R06_DUPLICATE_CLEAR, R07_LIMIT_AVAILABLE]

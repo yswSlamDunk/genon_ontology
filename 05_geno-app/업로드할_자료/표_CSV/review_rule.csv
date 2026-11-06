@@ -1,0 +1,7 @@
+﻿rule_id,check_order,route,check,condition,uses
+RV-01,1,조사,알릴 의무,"계약 3년 이내 암 청구 → 고객 치료 이력에서 가입일 전 3개월 안에 '이상 소견 있음' 기록이 있고, 그 계약 고지 Q1이 '아니오'이면 조사",Claim · Policy · TreatmentHistory · Disclosure
+RV-02,2,서면,약관 판정,약관 판정이 부지급(면책 기간 · 보상 제외)이면 사람이 확인하고 안내,Coverage · ExclusionRule
+RV-03,3,서면,통계 이상치,서류에서 읽은 값(입원일수 · 금액)이 같은 질병 · 청구 종류 통계표의 이상치 기준(outlier_limit)을 넘으면 서면,ClaimExtract · StatMart
+RV-04,4,서면,병원 유의,진료 병원이 유의 병원(notice_flag = Y)이면 서면,Hospital · HospitalNotice
+RV-05,5,서면,기지급 위험도,"같은 질병코드 · 청구 종류의 기지급 이력이 5건 이상일 때, 위험도 = 평균(면책액 ÷ (결정액 + 면책액))이 30% 이상이면 서면 (5건 미만이면 이 규칙은 쓰지 않음)",PaidHistory
+RV-06,6,자동,나머지,위 규칙에 하나도 걸리지 않으면 자동 심사 — 약관 판정 금액대로 지급,-

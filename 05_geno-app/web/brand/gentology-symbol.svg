@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- GenTology 심볼 — 육각 틀 안에 이어진 점 셋(온톨로지: 엔터티 · 관계). 색은 GenD와 같은 제논 블루 그라데이션 -->
+  <defs>
+    <linearGradient id="g" x1="18" y1="104" x2="102" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset=".17" stop-color="#0061ed"/>
+      <stop offset="1" stop-color="#3eadff"/>
+    </linearGradient>
+  </defs>
+  <path fill="none" stroke="url(#g)" stroke-width="10" stroke-linejoin="round" d="M60 8 L105 34 L105 86 L60 112 L15 86 L15 34 Z"/>
+  <path fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" d="M60 42 L40 72 M60 42 L80 72 M40 72 L80 72"/>
+  <circle cx="60" cy="40" r="10" fill="url(#g)"/>
+  <circle cx="39" cy="74" r="10" fill="url(#g)"/>
+  <circle cx="81" cy="74" r="10" fill="url(#g)"/>
+</svg>

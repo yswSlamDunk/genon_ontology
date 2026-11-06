@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 120">
+  <!-- GenTology 로고 — 심볼 + 글자(GEN 검정 · TOLOGY 블루 그라데이션, GenD의 GEN · D 나눔과 같은 방식) -->
+  <defs>
+    <linearGradient id="g" x1="18" y1="104" x2="102" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset=".17" stop-color="#0061ed"/>
+      <stop offset="1" stop-color="#3eadff"/>
+    </linearGradient>
+    <linearGradient id="t" x1="300" y1="100" x2="640" y2="20" gradientUnits="userSpaceOnUse">
+      <stop offset=".17" stop-color="#0061ed"/>
+      <stop offset="1" stop-color="#3eadff"/>
+    </linearGradient>
+  </defs>
+  <path fill="none" stroke="url(#g)" stroke-width="10" stroke-linejoin="round" d="M60 8 L105 34 L105 86 L60 112 L15 86 L15 34 Z"/>
+  <path fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" d="M60 42 L40 72 M60 42 L80 72 M40 72 L80 72"/>
+  <circle cx="60" cy="40" r="10" fill="url(#g)"/>
+  <circle cx="39" cy="74" r="10" fill="url(#g)"/>
+  <circle cx="81" cy="74" r="10" fill="url(#g)"/>
+  <text x="140" y="88" font-family="Pretendard, 'Helvetica Neue', Arial, sans-serif" font-size="70" font-weight="700" letter-spacing="6"><tspan fill="#ffffff">GEN</tspan><tspan fill="url(#t)">TOLOGY</tspan></text>
+</svg>

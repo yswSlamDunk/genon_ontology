@@ -1,0 +1,17 @@
+[project]
+name = "insurance-poc-systems"
+version = "0.1.0"
+description = "보험 PoC 업무 시스템 서버 (계약·접수·심사·지급) — 서버_설계서.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "psycopg[binary]>=3.2",
+    "httpx>=0.27",
+]
+
+[tool.uv]
+package = false
+
+[tool.pyright]
+extraPaths = ["services"]

@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph ST["Ontological Studio"]
+        direction TB
+        B["온톨로지 구축<br/>(설계·적재·액션 정의)"]
+        G[("온톨로지 그래프")]
+        Q["질의·액션<br/>(질문·계획·실행·보상)"]
+        APP["앱<br/>(청구 심사 화면)"]
+        K["액션 실행기<br/>(kinetic)"]
+        DS["데이터소스 4개"]
+        B --> G
+        G --> Q
+        G --> APP
+        Q --> K
+    end
+    subgraph SYS["업무 시스템 서버"]
+        direction TB
+        C["계약 :18101"]
+        I["접수 :18102"]
+        R["심사 :18103<br/>평가 엔진 R01–R07"]
+        P["지급 :18104 (모의)"]
+    end
+    DB[("PostgreSQL 16<br/>insurance DB<br/>스키마 4개")]
+    K -- "REST + 인증<br/>+ Idempotency-Key" --> I
+    K --> R
+    B -- "조회 API (GET)" --> C
+    C -- "서비스 계정<br/>(계약은 읽기만)" --> DB
+    I --> DB
+    R --> DB
+    P --> DB
+    DS -. "읽기 전용 계정" .-> DB

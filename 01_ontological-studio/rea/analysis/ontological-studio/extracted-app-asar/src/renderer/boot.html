@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>Ontological Studio</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'">
+<style>
+  /* Ontological portal palette (portal/web/style.css), as the app itself uses. */
+  :root {
+    color-scheme: dark;
+    --bg: #14171c; --bg-2: #191d24; --bg-3: #20252e; --line: #2c333e;
+    --fg: #e6eaf0; --fg-dim: #93a1b3; --accent: #18b6a0; --err: #e0554c;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--fg);
+         font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; -webkit-font-smoothing: antialiased;
+         -webkit-user-select: none; user-select: none; }
+  .card { width: 440px; }
+  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  .lockup { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .lockup img { height: 30px; filter: invert(1); } /* one-colour lockup, flipped for the dark screen */
+  .badge { font-size: 11px; font-weight: 600; color: var(--accent); border: 1px solid rgba(24,182,160,.55); border-radius: 999px; padding: 0 8px; line-height: 18px; }
+  h1 { font-size: 19px; font-weight: 650; margin: 0; letter-spacing: -0.01em; }
+  .sub { color: var(--fg-dim); font-size: 12.5px; margin-top: 2px; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-dim); margin: 0 0 10px; }
+  ol { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-2); overflow: hidden; }
+  li { display: flex; align-items: center; gap: 12px; padding: 11px 14px; color: var(--fg-dim); border-top: 1px solid var(--line); font-size: 13px; }
+  li:first-child { border-top: 0; }
+  li .mark { width: 16px; height: 16px; flex: none; display: grid; place-items: center; }
+  li .mark::before { content: ''; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid #4a5566; }
+  li .name { flex: 1; }
+  li .t { font-family: var(--mono); font-size: 11.5px; color: var(--fg-dim); }
+  li.active { color: var(--fg); background: var(--bg-3); }
+  li.active .mark::before { border: 0; background: var(--accent); box-shadow: 0 0 0 0 rgba(24,182,160,.6); animation: pulse 1.4s ease-out infinite; }
+  li.done { color: var(--fg); }
+  li.done .mark::before { width: 12px; height: 7px; border: 0; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+                          border-radius: 0; transform: translateY(-2px) rotate(-45deg); }
+  li.skip { display: none; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(24,182,160,.55); } 100% { box-shadow: 0 0 0 8px rgba(24,182,160,0); } }
+  .bar { height: 2px; margin-top: 16px; background: var(--line); border-radius: 1px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .4s ease; }
+  #detail { margin-top: 10px; color: var(--fg-dim); font-size: 12.5px; min-height: 1.5em; }
+  #err { display: none; margin-top: 16px; padding: 12px 14px; border: 1px solid rgba(224,85,76,.5); background: rgba(224,85,76,.08);
+         border-radius: 8px; color: var(--err); font-family: var(--mono); font-size: 12px; white-space: pre-wrap; -webkit-user-select: text; user-select: text; }
+  .foot { margin-top: 28px; font-family: var(--mono); font-size: 11px; color: #5d6a7c; }
+  /* no native title bar: the top strip drags the window, the traffic lights sit in it */
+  .drag { position: fixed; top: 0; left: 0; right: 0; height: 38px; -webkit-app-region: drag; border-bottom: 1px solid var(--line); background: #0f1216; }
+</style></head>
+<body><div class="drag"></div><div class="card">
+  <div class="brand">
+    <div>
+      <div class="lockup"><img src="brand-lockup.svg" alt="Ontological Studio"></div>
+      <div class="sub">Studio · Ontological DB(데이터 패브릭) · PostgreSQL · 키네틱 액션</div>
+    </div>
+  </div>
+  <p class="label">Starting</p>
+  <ol id="steps">
+    <li data-k="postgres"><span class="mark"></span><span class="name">PostgreSQL</span><span class="t"></span></li>
+    <li data-k="bootstrap" class="skip"><span class="mark"></span><span class="name">첫 실행 준비 — 확장 · 예제 DB</span><span class="t"></span></li>
+    <li data-k="ontological"><span class="mark"></span><span class="name">Ontological — Bolt 게이트웨이 · 포털</span><span class="t"></span></li>
+    <li data-k="studio"><span class="mark"></span><span class="name">Studio — 백엔드 · MCP · 키네틱 액션</span><span class="t"></span></li>
+    <li data-k="ready"><span class="mark"></span><span class="name">화면 열기</span><span class="t"></span></li>
+  </ol>
+  <div class="bar"><i id="bar"></i></div>
+  <div id="detail">시작하는 중…</div>
+  <div id="err"></div>
+  <div class="foot">127.0.0.1 only · no Docker · one PostgreSQL</div>
+</div>
+<script>
+  const order = ['postgres', 'bootstrap', 'ontological', 'studio', 'ready']
+  const t0 = Date.now()
+  let cur = -1, since = t0
+  window.setStep = (k, detail) => {
+    const i = order.indexOf(k)
+    if (k === 'bootstrap') document.querySelector('[data-k="bootstrap"]').classList.remove('skip')
+    document.querySelectorAll('#steps li').forEach((li) => {
+      const j = order.indexOf(li.dataset.k)
+      li.classList.toggle('done', j < i)
+      li.classList.toggle('active', j === i)
+      // elapsed time of the step that just finished
+      if (j === cur && j < i) li.querySelector('.t').textContent = ((Date.now() - since) / 1000).toFixed(1) + ' s'
+    })
+    if (i !== cur) { cur = i; since = Date.now() }
+    document.getElementById('bar').style.width = Math.round(((i + (k === 'ready' ? 1 : 0.4)) / order.length) * 100) + '%'
+    document.getElementById('detail').textContent = detail
+  }
+  window.setError = (msg, logDir) => {
+    document.querySelectorAll('#steps li.active').forEach((li) => li.classList.remove('active'))
+    const e = document.getElementById('err'); e.style.display = 'block'
+    e.textContent = '시작하지 못했습니다.\n' + msg + '\n\n로그: ' + logDir
+  }
+</script></body></html>

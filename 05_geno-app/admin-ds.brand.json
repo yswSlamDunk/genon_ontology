@@ -1,0 +1,6 @@
+{
+  "color": "#0161ed",
+  "logo": "./web/brand/gentology-logo.svg",
+  "logoInverse": "./web/brand/gentology-logo-white.svg",
+  "out": "./web/brand.css"
+}

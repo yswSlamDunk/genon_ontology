@@ -1,0 +1,334 @@
+{
+ "exported_at": "2026-11-04",
+ "model": "보험 청구 심사 온톨로지",
+ "classes": [
+  {
+   "name": "ActionLog",
+   "properties": "[{\"name\": \"log_id\", \"type\": \"string\", \"description\": \"이력 ID (업무 키)\"}, {\"name\": \"action_type\", \"type\": \"string\", \"description\": \"실행 유형 (예: ApproveClaim)\"}, {\"name\": \"actor_id\", \"type\": \"string\", \"description\": \"실행자 ID\"}, {\"name\": \"target_ids\", \"type\": \"string\", \"description\": \"대상 ID 목록 (쉼표 구분)\"}, {\"name\": \"executed_at\", \"type\": \"datetime\", \"description\": \"실행 시각\"}, {\"name\": \"idempotency_key\", \"type\": \"string\", \"description\": \"요청 키\"}, {\"name\": \"outcome\", \"type\": \"string\", \"description\": \"결과\"}, {\"name\": \"reason\", \"type\": \"string\", \"description\": \"사유\"}]",
+   "description": "업무 실행 이력(ins-review action_log). 키 log_id. 업무 처리 중 쌓이는 기록 — 현재 0건. 실행 유형(action_type, 예: ApproveClaim)·실행자·결과(outcome)·사유를 가진다.",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "Assessment",
+   "properties": "[{\"name\": \"assessment_id\", \"type\": \"string\", \"description\": \"평가 ID (업무 키)\"}, {\"name\": \"claim_id\", \"type\": \"string\", \"description\": \"청구 ID — InsuranceClaim.claim_id\"}, {\"name\": \"rule_set_id\", \"type\": \"string\", \"description\": \"적용 규칙 버전 — RuleSetVersion.rule_set_id\"}, {\"name\": \"evaluated_at\", \"type\": \"datetime\", \"description\": \"평가 시각\"}, {\"name\": \"input_hash\", \"type\": \"string\", \"description\": \"평가 입력 해시\"}, {\"name\": \"recommendation\", \"type\": \"string\", \"description\": \"평가 권고\"}, {\"name\": \"eligible_days\", \"type\": \"integer\", \"description\": \"지급 인정 일수\"}, {\"name\": \"candidate_amount_krw\", \"type\": \"integer\", \"description\": \"지급 후보 금액 (원)\"}, {\"name\": \"reason_codes\", \"type\": \"string\", \"description\": \"사유 코드 (쉼표 구분)\"}]",
+   "description": "청구 평가 기록(ins-review assessment). 키 assessment_id. 업무 처리 중 쌓이는 기록 — 현재 0건. 적용 규칙(rule_set_id), 권고(recommendation), 지급 인정 일수(eligible_days), 후보 금액, 사유 코드를 가진다.",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "ClaimReceipt",
+   "properties": "[{\"name\": \"receipt_no\", \"type\": \"string\", \"description\": \"접수 번호 (업무 키, 예: RC-0001)\"}, {\"name\": \"request_key\", \"type\": \"string\", \"description\": \"접수 요청 키\"}, {\"name\": \"policy_number\", \"type\": \"string\", \"description\": \"대외 계약 번호 — Policy.policy_number\"}, {\"name\": \"coverage_code\", \"type\": \"string\", \"description\": \"보장 코드 — Coverage.coverage_code\"}, {\"name\": \"submitter_no\", \"type\": \"string\", \"description\": \"제출자 청구인 번호 — Claimant.claimant_no\"}, {\"name\": \"patient_no\", \"type\": \"string\", \"description\": \"입원한 사람 청구인 번호 — Claimant.claimant_no\"}, {\"name\": \"accident_no\", \"type\": \"string\", \"description\": \"사고번호 — InsuranceEvent.intake_accident_no\"}, {\"name\": \"reported_provider_code\", \"type\": \"string\", \"description\": \"신고된 의료기관 코드 (확인 전)\"}, {\"name\": \"reported_admission_date\", \"type\": \"date\", \"description\": \"신고된 입원일 (확인 전)\"}, {\"name\": \"reported_discharge_date\", \"type\": \"date\", \"description\": \"신고된 퇴원일 (확인 전)\"}, {\"name\": \"received_at\", \"type\": \"datetime\", \"description\": \"접수 시각 (접수됨)\"}, {\"name\": \"cancelled_at\", \"type\": \"datetime\", \"description\": \"접수 취소 시각 — 값이 없으면 취소되지 않음\"}, {\"name\": \"cancel_reason\", \"type\": \"string\", \"description\": \"취소 사유\"}]",
+   "description": "접수 시스템(ins-intake)의 청구 접수. 키 receipt_no(예: RC-0001) — 심사 시스템 청구(InsuranceClaim.receipt_no)와 같은 청구다. 접수 시스템에는 상태 값이 없다: 접수 상태는 '접수됨(received_at), 취소 여부(cancelled_at·cancel_reason)'로 답한다. RECEIVED 등 상태 코드는 심사 상태(InsuranceClaim.status)에만 쓴다. 입원일·퇴원일·의료기관은 '신고값'(확인 전)이다. 제출자(submitter_no)·입원자(patient_no)는 청구인 번호, accident_no 는 입원 사건(InsuranceEvent.intake_accident_no)과 같다.",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "Claimant",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "ContractCustomer",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "Coverage",
+   "properties": "[{\"name\": \"coverage_id\", \"type\": \"string\", \"description\": \"보장 ID (업무 키, 예: CV-001)\"}, {\"name\": \"policy_id\", \"type\": \"string\", \"description\": \"계약 ID — Policy.policy_id\"}, {\"name\": \"policy_number\", \"type\": \"string\", \"description\": \"대외 계약 번호\"}, {\"name\": \"coverage_code\", \"type\": \"string\", \"description\": \"보장 코드 (예: INPATIENT-DAILY-A)\"}, {\"name\": \"version\", \"type\": \"string\", \"description\": \"보장 버전\"}, {\"name\": \"valid_from\", \"type\": \"date\", \"description\": \"보장 기간 시작일\"}, {\"name\": \"valid_to\", \"type\": \"date\", \"description\": \"보장 기간 종료일\"}, {\"name\": \"daily_amount_krw\", \"type\": \"integer\", \"description\": \"1일 지급액 (원)\"}, {\"name\": \"max_days\", \"type\": \"integer\", \"description\": \"보장 기간(benefit_period_key) 내 피보험자 지급 한도 일수\"}, {\"name\": \"waiting_days\", \"type\": \"integer\", \"description\": \"대기 기간 (일, 보장 시작일부터)\"}, {\"name\": \"waiting_period_end\", \"type\": \"date\", \"description\": \"대기 기간이 끝나는 날 = valid_from + waiting_days (이 날 이후 입원이면 대기 기간 경과)\"}, {\"name\": \"rule_code\", \"type\": \"string\", \"description\": \"심사 규칙 코드 — RuleSetVersion.rule_code\"}, {\"name\": \"rule_version\", \"type\": \"string\", \"description\": \"심사 규칙 버전 — RuleSetVersion.version\"}, {\"name\": \"benefit_period_key\", \"type\": \"string\", \"description\": \"한도 산정 보장 기간 키 (예: 2026-01-01/2027-01-01)\"}, {\"name\": \"revision\", \"type\": \"integer\", \"description\": \"레코드 revision\"}]",
+   "description": "계약의 보장(ins-contract coverage). 키 coverage_id(예: CV-001, 심사 시스템이 씀). 접수 시스템은 policy_number + coverage_code(예: INPATIENT-DAILY-A)로 가리킨다. 1일 지급액·지급 한도 일수(max_days, 보장 기간 benefit_period_key 기준)·대기 기간(waiting_days, waiting_period_end)·심사 기준(rule_code·rule_version)을 가진다. 날짜는 ISO 문자열(YYYY-MM-DD)이라 문자열 비교로 판정한다.",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "Document",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "DocumentVerification",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "InsuranceClaim",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "InsuranceEvent",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "PaymentOrder",
+   "properties": "[{\"name\": \"payment_order_id\", \"type\": \"string\", \"description\": \"지급 지시 ID (업무 키)\"}, {\"name\": \"claim_id\", \"type\": \"string\", \"description\": \"청구 ID\"}, {\"name\": \"assessment_id\", \"type\": \"string\", \"description\": \"근거 평가 ID\"}, {\"name\": \"beneficiary_cust_no\", \"type\": \"string\", \"description\": \"수익자 고객 번호\"}, {\"name\": \"insured_cust_no\", \"type\": \"string\", \"description\": \"피보험자 고객 번호\"}, {\"name\": \"policy_id\", \"type\": \"string\", \"description\": \"계약 ID\"}, {\"name\": \"coverage_id\", \"type\": \"string\", \"description\": \"보장 ID\"}, {\"name\": \"benefit_period_key\", \"type\": \"string\", \"description\": \"보장 기간 키\"}, {\"name\": \"reserved_days\", \"type\": \"integer\", \"description\": \"지급(예약) 일수\"}, {\"name\": \"amount_krw\", \"type\": \"integer\", \"description\": \"지급 금액 (원)\"}, {\"name\": \"status\", \"type\": \"string\", \"description\": \"RESERVED · REQUESTED · PAID · FAILED · UNKNOWN\"}, {\"name\": \"payment_key\", \"type\": \"string\", \"description\": \"지급 키 — PaymentRequest.payment_key\"}, {\"name\": \"external_transaction_id\", \"type\": \"string\", \"description\": \"지급 시스템 거래 ID\"}, {\"name\": \"decided_by\", \"type\": \"string\", \"description\": \"결정자\"}, {\"name\": \"decided_at\", \"type\": \"datetime\", \"description\": \"결정 시각\"}, {\"name\": \"revision\", \"type\": \"integer\", \"description\": \"레코드 revision\"}]",
+   "description": "지급 지시(ins-review payment_order). 키 payment_order_id. 업무 처리 중 쌓이는 기록 — 현재 0건. 승인 시 생성되며 보장 기간(benefit_period_key) 한도에서 reserved_days 를 예약한다. status: RESERVED · REQUESTED · PAID · FAILED · UNKNOWN. 지급 요청·대사 액션의 대상.",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "PaymentRequest",
+   "properties": "[{\"name\": \"request_no\", \"type\": \"string\", \"description\": \"지급 요청 번호 (업무 키)\"}, {\"name\": \"payment_key\", \"type\": \"string\", \"description\": \"지급 키 — PaymentOrder.payment_key\"}, {\"name\": \"amount_krw\", \"type\": \"integer\", \"description\": \"지급 금액 (원)\"}, {\"name\": \"status\", \"type\": \"string\", \"description\": \"REQUESTED · PAID · FAILED\"}, {\"name\": \"external_transaction_id\", \"type\": \"string\", \"description\": \"외부 거래 ID\"}, {\"name\": \"attempt_count\", \"type\": \"integer\", \"description\": \"시도 횟수\"}, {\"name\": \"requested_at\", \"type\": \"datetime\", \"description\": \"요청 시각\"}, {\"name\": \"completed_at\", \"type\": \"datetime\", \"description\": \"완료 시각\"}]",
+   "description": "모의 외부 지급 시스템(ins-payment)의 지급 요청 내역. 키 request_no. payment_key 로 지급 지시(PaymentOrder)와 잇는다. 현재 0건.",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "Person",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "Policy",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "PolicyRole",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "ReviewTask",
+   "properties": "[{\"name\": \"task_id\", \"type\": \"string\", \"description\": \"심사 업무 ID (업무 키)\"}, {\"name\": \"claim_id\", \"type\": \"string\", \"description\": \"청구 ID — InsuranceClaim.claim_id\"}, {\"name\": \"task_type\", \"type\": \"string\", \"description\": \"업무 유형\"}, {\"name\": \"reason_code\", \"type\": \"string\", \"description\": \"발생 사유 코드\"}, {\"name\": \"related_ref\", \"type\": \"string\", \"description\": \"관련 참조\"}, {\"name\": \"status\", \"type\": \"string\", \"description\": \"OPEN(미해결) · RESOLVED\"}, {\"name\": \"assignee_id\", \"type\": \"string\", \"description\": \"담당자 ID\"}, {\"name\": \"reason_note\", \"type\": \"string\", \"description\": \"사유 설명\"}, {\"name\": \"resolution\", \"type\": \"string\", \"description\": \"해결 근거\"}, {\"name\": \"resolved_by\", \"type\": \"string\", \"description\": \"해결자\"}, {\"name\": \"resolved_at\", \"type\": \"datetime\", \"description\": \"해결 시각\"}, {\"name\": \"revision\", \"type\": \"integer\", \"description\": \"레코드 revision\"}]",
+   "description": "심사 업무(ins-review review_task). 키 task_id. 업무 처리 중 쌓이는 기록 — 현재 0건. status 는 OPEN(미해결)·RESOLVED. 심사 업무 해결 액션의 대상.",
+   "binding_kind": "materialized"
+  },
+  {
+   "name": "RuleSetVersion",
+   "properties": "[]",
+   "description": "",
+   "binding_kind": "materialized"
+  }
+ ],
+ "relationships": [
+  {
+   "name": "APPLIES_RULE",
+   "to_class": "RuleSetVersion",
+   "from_class": "Coverage",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"rule_code,rule_version\", \"to_column\": \"rule_code,version\"}]",
+   "description": "보장에 적용되는 심사 기준 버전. 조인 키: Coverage.rule_code = RuleSetVersion.rule_code AND Coverage.rule_version = RuleSetVersion.version"
+  },
+  {
+   "name": "ASSESSES",
+   "to_class": "InsuranceClaim",
+   "from_class": "Assessment",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"claim_id\", \"to_column\": \"claim_id\"}]",
+   "description": "평가 대상 청구. 조인 키: Assessment.claim_id = InsuranceClaim.claim_id"
+  },
+  {
+   "name": "ATTACHED_TO",
+   "to_class": "ClaimReceipt",
+   "from_class": "Document",
+   "properties": "[{\"name\": \"attachment_id\", \"type\": \"string\", \"description\": \"연결 ID (예: AT-0001)\"}, {\"name\": \"attached_at\", \"type\": \"datetime\"}, {\"name\": \"detached_at\", \"type\": \"datetime\", \"description\": \"해제 시각 (없으면 현재 연결)\"}, {\"name\": \"detach_reason\", \"type\": \"string\"}, {\"name\": \"replaces_attachment_id\", \"type\": \"string\"}, {\"name\": \"is_current\", \"type\": \"boolean\"}]",
+   "description": "서류가 접수에 연결됨(intake receipt_document). detached_at 이 비어 있으면 현재 연결 중, 있으면 해제(교체)됨. 조인 키: receipt_document.doc_id = Document.doc_id, receipt_document.receipt_no = ClaimReceipt.receipt_no"
+  },
+  {
+   "name": "BASED_ON_ASSESSMENT",
+   "to_class": "Assessment",
+   "from_class": "PaymentOrder",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"assessment_id\", \"to_column\": \"assessment_id\"}]",
+   "description": "지급 지시의 근거 평가. 조인 키: PaymentOrder.assessment_id = Assessment.assessment_id"
+  },
+  {
+   "name": "CLAIMANT_RECORD_OF",
+   "to_class": "Person",
+   "from_class": "Claimant",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"identity_token\", \"to_column\": \"identity_token\"}]",
+   "description": "접수 시스템 청구인 기록이 가리키는 사람. 조인 키: Claimant.identity_token = Person.identity_token"
+  },
+  {
+   "name": "CLAIMS_COVERAGE",
+   "to_class": "Coverage",
+   "from_class": "InsuranceClaim",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"coverage_id\", \"to_column\": \"coverage_id\"}]",
+   "description": "청구가 청구한 보장. 조인 키: InsuranceClaim.coverage_id = Coverage.coverage_id"
+  },
+  {
+   "name": "CLAIM_SUBMITTED_BY",
+   "to_class": "Claimant",
+   "from_class": "InsuranceClaim",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"submitted_by_claimant_no\", \"to_column\": \"claimant_no\"}]",
+   "description": "심사 시스템에 기록된 청구 제출자. 조인 키: InsuranceClaim.submitted_by_claimant_no = Claimant.claimant_no"
+  },
+  {
+   "name": "CLAIM_UNDER_POLICY",
+   "to_class": "Policy",
+   "from_class": "InsuranceClaim",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"policy_id\", \"to_column\": \"policy_id\"}]",
+   "description": "청구가 걸린 계약. 조인 키: InsuranceClaim.policy_id = Policy.policy_id"
+  },
+  {
+   "name": "COVERAGE_OF",
+   "to_class": "Policy",
+   "from_class": "Coverage",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"policy_id\", \"to_column\": \"policy_id\"}]",
+   "description": "보장이 속한 계약. 조인 키: Coverage.policy_id = Policy.policy_id"
+  },
+  {
+   "name": "CURRENT_ASSESSMENT",
+   "to_class": "Assessment",
+   "from_class": "InsuranceClaim",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"current_assessment_id\", \"to_column\": \"assessment_id\"}]",
+   "description": "청구의 현재 평가(승인·부지급 결정 근거). 조인 키: InsuranceClaim.current_assessment_id = Assessment.assessment_id"
+  },
+  {
+   "name": "CUSTOMER_RECORD_OF",
+   "to_class": "Person",
+   "from_class": "ContractCustomer",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"identity_token\", \"to_column\": \"identity_token\"}]",
+   "description": "계약 시스템 고객 기록이 가리키는 사람. 조인 키: ContractCustomer.identity_token = Person.identity_token"
+  },
+  {
+   "name": "DRAWS_ON_COVERAGE",
+   "to_class": "Coverage",
+   "from_class": "PaymentOrder",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"coverage_id\", \"to_column\": \"coverage_id\"}]",
+   "description": "지급 지시가 한도를 쓰는 보장(보장 기간 benefit_period_key 기준 reserved_days 차감). 조인 키: PaymentOrder.coverage_id = Coverage.coverage_id"
+  },
+  {
+   "name": "EVENT_SUBJECT",
+   "to_class": "Claimant",
+   "from_class": "InsuranceEvent",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"subject_claimant_no\", \"to_column\": \"claimant_no\"}]",
+   "description": "입원 사건의 대상자(입원한 사람). 조인 키: InsuranceEvent.subject_claimant_no = Claimant.claimant_no"
+  },
+  {
+   "name": "EXECUTES_ORDER",
+   "to_class": "PaymentOrder",
+   "from_class": "PaymentRequest",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"payment_key\", \"to_column\": \"payment_key\"}]",
+   "description": "외부 지급 요청이 실행하는 지급 지시. 조인 키: PaymentRequest.payment_key = PaymentOrder.payment_key"
+  },
+  {
+   "name": "FOR_EVENT",
+   "to_class": "InsuranceEvent",
+   "from_class": "InsuranceClaim",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"event_id\", \"to_column\": \"event_id\"}]",
+   "description": "청구가 연결된 입원 사건. 한 사건에 여러 청구가 연결될 수 있고 이것으로 중복을 본다. 조인 키: InsuranceClaim.event_id = InsuranceEvent.event_id"
+  },
+  {
+   "name": "HOLDS_ROLE",
+   "to_class": "PolicyRole",
+   "from_class": "ContractCustomer",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"cust_no\", \"to_column\": \"cust_no\"}]",
+   "description": "고객이 계약상 역할을 맡는다. 조인 키: ContractCustomer.cust_no = PolicyRole.cust_no"
+  },
+  {
+   "name": "HOSPITALIZED_PERSON",
+   "to_class": "Claimant",
+   "from_class": "ClaimReceipt",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"patient_no\", \"to_column\": \"claimant_no\"}]",
+   "description": "접수에 신고된 입원한 사람. 조인 키: ClaimReceipt.patient_no = Claimant.claimant_no"
+  },
+  {
+   "name": "LOGGED_FOR",
+   "to_class": "InsuranceClaim",
+   "from_class": "ActionLog",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"target_ids\", \"to_column\": \"claim_id\"}]",
+   "description": "실행 이력이 가리키는 청구. 조인 키: ActionLog.target_ids 에 InsuranceClaim.claim_id 포함"
+  },
+  {
+   "name": "PAYS_CLAIM",
+   "to_class": "InsuranceClaim",
+   "from_class": "PaymentOrder",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"claim_id\", \"to_column\": \"claim_id\"}]",
+   "description": "지급 지시가 지급하는 청구. 조인 키: PaymentOrder.claim_id = InsuranceClaim.claim_id"
+  },
+  {
+   "name": "PAYS_TO",
+   "to_class": "ContractCustomer",
+   "from_class": "PaymentOrder",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"beneficiary_cust_no\", \"to_column\": \"cust_no\"}]",
+   "description": "지급 받는 수익자 고객. 조인 키: PaymentOrder.beneficiary_cust_no = ContractCustomer.cust_no"
+  },
+  {
+   "name": "RECEIPT_FOR_COVERAGE",
+   "to_class": "Coverage",
+   "from_class": "ClaimReceipt",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"policy_number,coverage_code\", \"to_column\": \"policy_number,coverage_code\"}]",
+   "description": "접수가 청구한 보장. 조인 키: ClaimReceipt.policy_number = Coverage.policy_number AND ClaimReceipt.coverage_code = Coverage.coverage_code"
+  },
+  {
+   "name": "RECEIPT_UNDER_POLICY",
+   "to_class": "Policy",
+   "from_class": "ClaimReceipt",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"policy_number\", \"to_column\": \"policy_number\"}]",
+   "description": "접수가 가리키는 계약(대외 계약 번호). 조인 키: ClaimReceipt.policy_number = Policy.policy_number"
+  },
+  {
+   "name": "RECEIVED_VIA",
+   "to_class": "ClaimReceipt",
+   "from_class": "InsuranceClaim",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"receipt_no\", \"to_column\": \"receipt_no\"}]",
+   "description": "심사 청구와 같은 청구의 접수 기록. 조인 키: InsuranceClaim.receipt_no = ClaimReceipt.receipt_no"
+  },
+  {
+   "name": "REPORTS_EVENT",
+   "to_class": "InsuranceEvent",
+   "from_class": "ClaimReceipt",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"accident_no\", \"to_column\": \"intake_accident_no\"}]",
+   "description": "접수의 사고번호가 가리키는 입원 사건. 조인 키: ClaimReceipt.accident_no = InsuranceEvent.intake_accident_no"
+  },
+  {
+   "name": "ROLE_IN",
+   "to_class": "Policy",
+   "from_class": "PolicyRole",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"policy_id\", \"to_column\": \"policy_id\"}]",
+   "description": "역할이 속한 계약. 조인 키: PolicyRole.policy_id = Policy.policy_id"
+  },
+  {
+   "name": "SUBMITTED_BY",
+   "to_class": "Claimant",
+   "from_class": "ClaimReceipt",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"submitter_no\", \"to_column\": \"claimant_no\"}]",
+   "description": "접수를 제출한 사람(제출자). 조인 키: ClaimReceipt.submitter_no = Claimant.claimant_no"
+  },
+  {
+   "name": "SUPPORTS_EVENT",
+   "to_class": "InsuranceEvent",
+   "from_class": "DocumentVerification",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"supports_event_id\", \"to_column\": \"event_id\"}]",
+   "description": "확인된 서류가 뒷받침하는 입원 사건. 조인 키: DocumentVerification.supports_event_id = InsuranceEvent.event_id"
+  },
+  {
+   "name": "TASK_FOR",
+   "to_class": "InsuranceClaim",
+   "from_class": "ReviewTask",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"claim_id\", \"to_column\": \"claim_id\"}]",
+   "description": "심사 업무가 걸린 청구. 조인 키: ReviewTask.claim_id = InsuranceClaim.claim_id"
+  },
+  {
+   "name": "USED_EVIDENCE",
+   "to_class": "Document",
+   "from_class": "Assessment",
+   "properties": "[{\"name\": \"content_hash\", \"type\": \"string\", \"description\": \"평가 시점 서류 해시\"}]",
+   "description": "평가가 사용한 증빙 서류(review assessment_evidence). 조인 키: assessment_evidence.assessment_id = Assessment.assessment_id, assessment_evidence.doc_id = Document.doc_id"
+  },
+  {
+   "name": "USED_RULE",
+   "to_class": "RuleSetVersion",
+   "from_class": "Assessment",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"rule_set_id\", \"to_column\": \"rule_set_id\"}]",
+   "description": "평가에 쓴 규칙 버전. 조인 키: Assessment.rule_set_id = RuleSetVersion.rule_set_id"
+  },
+  {
+   "name": "VERIFIED_INSURED",
+   "to_class": "Claimant",
+   "from_class": "DocumentVerification",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"verified_insured\", \"to_column\": \"claimant_no\"}]",
+   "description": "확인값의 피보험자(입원한 사람). 조인 키: DocumentVerification.verified_insured = Claimant.claimant_no"
+  },
+  {
+   "name": "VERIFIES",
+   "to_class": "Document",
+   "from_class": "DocumentVerification",
+   "properties": "[{\"name\": \"join_key\", \"from_column\": \"doc_id\", \"to_column\": \"doc_id\"}]",
+   "description": "확인 결과가 대상으로 한 서류 원문. 조인 키: DocumentVerification.doc_id = Document.doc_id"
+  }
+ ]
+}

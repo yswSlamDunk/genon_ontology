@@ -1,0 +1,488 @@
+[
+ {
+  "class": "Document",
+  "action": "verifyDocument",
+  "description": "증빙 서류를 확인 처리한다(A03, 심사 시스템 verifyEvidence). 확인값(피보험자 청구인 번호·의료기관·입원일·퇴원일)과 근거를 기록한다 — 추출값이 아닌 심사자 확인값. 되돌리는 API 가 없어 보상하지 않는다(정정은 다시 확인 처리). writeback 없음(응답 status 는 서류 노드의 값이 아니다). 실행 후 getDocumentVerification 으로 DocumentVerification 을 다시 적재한다. 실행자는 담당 심사자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "담당 심사자 ID (예: reviewer-01)"
+    },
+    "verification_status": {
+     "type": "string",
+     "enum": [
+      "VERIFIED",
+      "REJECTED"
+     ],
+     "description": "확인 완료=VERIFIED"
+    },
+    "insured": {
+     "type": "string",
+     "description": "확인값 피보험자 청구인 번호 (예: IP-0002)"
+    },
+    "provider_code": {
+     "type": "string",
+     "description": "확인값 의료기관 (예: H-001)"
+    },
+    "admission_date": {
+     "type": "string",
+     "format": "date",
+     "description": "확인값 입원일"
+    },
+    "discharge_date": {
+     "type": "string",
+     "format": "date",
+     "description": "확인값 퇴원일"
+    },
+    "note": {
+     "type": "string",
+     "description": "확인 근거 (예: 원본 대조)"
+    }
+   },
+   "required": [
+    "actor_id",
+    "verification_status",
+    "insured",
+    "provider_code",
+    "admission_date",
+    "discharge_date",
+    "note"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 1,
+  "max_targets": 1,
+  "key_property": "doc_id",
+  "system": "ins-review",
+  "operation_id": "verifyEvidence",
+  "steps": [
+   {
+    "name": "review",
+    "title": "심사 시스템 증빙 확인",
+    "system": "ins-review",
+    "operation_id": "verifyEvidence",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "InsuranceClaim",
+  "action": "approveClaim",
+  "description": "청구를 현재 평가 기준으로 지급 승인한다(A07). 1단계 심사 시스템 getClaim 으로 청구의 현재 평가 ID(current_assessment_id)를 읽고(조회라 보상 없음) → 2단계 approveClaim 에 그 평가 ID 를 넘긴다. 그래프 노드의 값을 쓰지 않으므로 평가 직후에도 최신 평가로 결정한다. 되돌릴 수 없는 결정이므로 항상 사람 승인(confirm_threshold 0)·보상 없음. writeback 없음(첫 단계 응답은 승인 전 상태). 현재 평가가 없거나 낡았으면 업무 시스템이 409 로 거절하고 그 사유를 그대로 보여 준다. 실행 후 getClaim·listPaymentOrders 로 다시 적재한다. 실행자는 담당 심사자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "담당 심사자 ID (예: reviewer-01)"
+    },
+    "reason": {
+     "type": "string",
+     "description": "결정 사유 (예: 지급 조건 충족)"
+    }
+   },
+   "required": [
+    "actor_id",
+    "reason"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 0,
+  "max_targets": 1,
+  "key_property": "claim_id",
+  "system": "ins-review",
+  "operation_id": "getClaim",
+  "steps": [
+   {
+    "name": "current",
+    "title": "심사 시스템 청구 조회 (현재 평가 ID)",
+    "system": "ins-review",
+    "operation_id": "getClaim",
+    "compensable": false
+   },
+   {
+    "name": "approve",
+    "title": "심사 시스템 지급 승인",
+    "system": "ins-review",
+    "operation_id": "approveClaim",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "InsuranceClaim",
+  "action": "evaluateClaim",
+  "description": "청구를 평가한다(A04, 심사 시스템 evaluateClaim). 평가 기록(Assessment)이 생기고 청구의 현재 평가가 바뀐다. 평가는 기록이라 되돌리지 않는다(다시 평가하면 새 평가가 현재 평가가 된다). 성공하면 응답 최상위 status(청구 상태)를 청구 노드 status 에 기록한다. 평가·업무 기록은 실행 후 listAssessments·listReviewTasks 로 다시 적재한다. 실행자는 담당 심사자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "담당 심사자 ID (예: reviewer-01)"
+    }
+   },
+   "required": [
+    "actor_id"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 1,
+  "max_targets": 5,
+  "key_property": "claim_id",
+  "system": "ins-review",
+  "operation_id": "evaluateClaim",
+  "steps": [
+   {
+    "name": "review",
+    "title": "심사 시스템 청구 평가",
+    "system": "ins-review",
+    "operation_id": "evaluateClaim",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "InsuranceClaim",
+  "action": "rejectClaim",
+  "description": "청구를 현재 평가 기준으로 부지급 결정한다(A08). 1단계 심사 시스템 getClaim 으로 청구의 현재 평가 ID(current_assessment_id)를 읽고(조회라 보상 없음) → 2단계 rejectClaim 에 그 평가 ID 를 넘긴다. 되돌릴 수 없는 결정이므로 항상 사람 승인(confirm_threshold 0)·보상 없음. writeback 없음(첫 단계 응답은 결정 전 상태). 현재 평가가 없거나 낡았으면 업무 시스템이 409 로 거절하고 그 사유를 그대로 보여 준다. 실행 후 getClaim 으로 다시 적재한다. 실행자는 담당 심사자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "담당 심사자 ID (예: reviewer-01)"
+    },
+    "reason": {
+     "type": "string",
+     "description": "부지급 사유 (예: 보장 조건 미충족)"
+    }
+   },
+   "required": [
+    "actor_id",
+    "reason"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 0,
+  "max_targets": 1,
+  "key_property": "claim_id",
+  "system": "ins-review",
+  "operation_id": "getClaim",
+  "steps": [
+   {
+    "name": "current",
+    "title": "심사 시스템 청구 조회 (현재 평가 ID)",
+    "system": "ins-review",
+    "operation_id": "getClaim",
+    "compensable": false
+   },
+   {
+    "name": "reject",
+    "title": "심사 시스템 부지급 결정",
+    "system": "ins-review",
+    "operation_id": "rejectClaim",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "InsuranceClaim",
+  "action": "replaceClaimDocument",
+  "description": "청구에 새 서류를 등록해 기존 서류와 교체한다(A02). 1단계 접수 시스템 registerDocument → 2단계 attachDocument(청구의 receipt_no 에 새 doc_id 연결, replaces_doc_id 해제) → 3단계 심사 시스템 recordEvidenceAttached. 3단계 실패 시 2단계 연결을 revertAttachment 로 되돌린다. 서류 등록(1단계)과 심사 반영(3단계)은 되돌리는 API 가 없어 보상하지 않는다(등록된 서류 원문은 연결 없이 남는다). writeback 없음(첫 단계 응답은 서류). 실행 후 getReceipt·getDocument·getClaim 으로 다시 적재한다. 실행자는 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "접수 담당자 ID (예: intake-01)"
+    },
+    "storage_ref": {
+     "type": "string",
+     "description": "새 서류 저장 위치 (예: test://DC-new)"
+    },
+    "content_hash": {
+     "type": "string",
+     "description": "새 서류 해시 (예: hash-new)"
+    },
+    "document_type": {
+     "type": "string",
+     "enum": [
+      "HOSPITALIZATION_CERTIFICATE",
+      "OTHER"
+     ],
+     "description": "서류 유형 (입퇴원확인서=HOSPITALIZATION_CERTIFICATE)"
+    },
+    "replaces_doc_id": {
+     "type": "string",
+     "description": "교체할 기존 서류 ID (예: DC-001)"
+    }
+   },
+   "required": [
+    "actor_id",
+    "storage_ref",
+    "content_hash",
+    "document_type",
+    "replaces_doc_id"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 1,
+  "max_targets": 1,
+  "key_property": "claim_id",
+  "system": "ins-intake",
+  "operation_id": "registerDocument",
+  "steps": [
+   {
+    "name": "register",
+    "title": "접수 시스템 서류 등록",
+    "system": "ins-intake",
+    "operation_id": "registerDocument",
+    "compensable": false
+   },
+   {
+    "name": "attach",
+    "title": "접수에 서류 연결·교체",
+    "system": "ins-intake",
+    "operation_id": "attachDocument",
+    "compensable": true
+   },
+   {
+    "name": "review",
+    "title": "심사 시스템 증빙 연결 반영",
+    "system": "ins-review",
+    "operation_id": "recordEvidenceAttached",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "InsuranceClaim",
+  "action": "requestEvidence",
+  "description": "청구에 증빙 보완을 요청한다(A05, 심사 시스템 requestEvidence). 누락 항목(입퇴원확인서=HOSPITALIZATION_CERTIFICATE)과 요청 문구를 기록한다(PoC 에서는 저장만 하고 발송하지 않음). 되돌리는 API 가 없어 보상하지 않는다(생긴 심사 업무는 resolveReviewTask 로 해결). 성공하면 응답 최상위 status(청구 상태)를 청구 노드 status 에 기록한다. 생긴 심사 업무는 실행 후 listReviewTasks 로 적재한다. 실행자는 담당 심사자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "담당 심사자 ID (예: reviewer-01)"
+    },
+    "missing_item": {
+     "type": "string",
+     "enum": [
+      "HOSPITALIZATION_CERTIFICATE",
+      "OTHER"
+     ],
+     "description": "보완 요청 서류 유형 (입퇴원확인서=HOSPITALIZATION_CERTIFICATE)"
+    },
+    "message": {
+     "type": "string",
+     "description": "요청 문구"
+    }
+   },
+   "required": [
+    "actor_id",
+    "missing_item",
+    "message"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 1,
+  "max_targets": 5,
+  "key_property": "claim_id",
+  "system": "ins-review",
+  "operation_id": "requestEvidence",
+  "steps": [
+   {
+    "name": "review",
+    "title": "심사 시스템 증빙 보완 요청",
+    "system": "ins-review",
+    "operation_id": "requestEvidence",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "PaymentOrder",
+  "action": "reconcilePayment",
+  "description": "결과 불명(status=UNKNOWN) 지급 지시를 모의 지급 내역과 대사한다(A11, 심사 시스템 reconcilePayment). 대사는 외부 지급 내역을 읽어 결과를 맞추는 것이라 보상하지 않는다. writeback 없음(응답 status 는 청구 상태라 지급 지시 노드에 쓰지 않는다). 실행 전 listPaymentOrders(status=UNKNOWN)로 적재하고, 실행 후 listPaymentOrders·getClaim·listPaymentRequests 로 다시 적재한다. 실행자는 지급 담당자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "지급 담당자 ID (예: payment-01)"
+    }
+   },
+   "required": [
+    "actor_id"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 1,
+  "max_targets": 20,
+  "key_property": "payment_order_id",
+  "system": "ins-review",
+  "operation_id": "reconcilePayment",
+  "steps": [
+   {
+    "name": "review",
+    "title": "심사 시스템 지급 결과 대사",
+    "system": "ins-review",
+    "operation_id": "reconcilePayment",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "PaymentOrder",
+  "action": "requestPayment",
+  "description": "지급 지시를 지급 요청한다(A09, 심사 시스템 requestPayment — 외부 지급 시스템에는 심사 시스템만 요청한다). 되돌릴 수 없으므로 항상 사람 승인(confirm_threshold 0)·보상 없음. writeback 없음(응답 status 는 청구 상태라 지급 지시 노드에 쓰지 않는다). 지급 지시는 승인 후 생기므로 실행 전 listPaymentOrders(claim_id)로 적재하고, 실행 후 listPaymentOrders·getClaim·listPaymentRequests 로 다시 적재한다. 실행자는 지급 담당자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "지급 담당자 ID (예: payment-01)"
+    }
+   },
+   "required": [
+    "actor_id"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 0,
+  "max_targets": 1,
+  "key_property": "payment_order_id",
+  "system": "ins-review",
+  "operation_id": "requestPayment",
+  "steps": [
+   {
+    "name": "review",
+    "title": "심사 시스템 지급 요청",
+    "system": "ins-review",
+    "operation_id": "requestPayment",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "Policy",
+  "action": "submitClaimReceipt",
+  "description": "계약을 기준으로 새 청구를 접수한다(A01). 1단계 접수 시스템 createReceipt(요청 키 request_key 로 중복 접수 방지) → 2단계 심사 시스템 registerClaim(1단계 응답 receipt_no, 담당 심사자는 심사 시스템 기본값). 2단계가 실패하면 1단계 접수를 cancelReceipt 로 취소한다. 심사 등록 단계는 되돌리는 API 가 없어 보상하지 않는다. 대상(계약) 노드에는 결과를 기록하지 않는다(writeback 없음) — 새 접수·청구는 실행 후 listReceipts·listClaims 로 다시 적재한다. 실행자는 커맨드의 담당자 ID(actor_id)이며 권한은 업무 시스템이 검사한다(409 거절 사유를 그대로 보여 준다). 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "접수 담당자 ID (예: intake-01)"
+    },
+    "request_key": {
+     "type": "string",
+     "description": "접수 요청 키 (예: REQ-GC-0001)"
+    },
+    "coverage_code": {
+     "type": "string",
+     "description": "보장 코드 (예: INPATIENT-DAILY-A)"
+    },
+    "submitter_no": {
+     "type": "string",
+     "description": "제출자 청구인 번호 (예: IP-0001)"
+    },
+    "patient_no": {
+     "type": "string",
+     "description": "입원자 청구인 번호 (예: IP-0002)"
+    },
+    "accident_no": {
+     "type": "string",
+     "description": "사고번호 (예: ACC-0002)"
+    },
+    "provider_code": {
+     "type": "string",
+     "description": "의료기관 코드 (예: H-003)"
+    },
+    "admission_date": {
+     "type": "string",
+     "format": "date",
+     "description": "신고 입원일"
+    },
+    "discharge_date": {
+     "type": "string",
+     "format": "date",
+     "description": "신고 퇴원일"
+    }
+   },
+   "required": [
+    "actor_id",
+    "request_key",
+    "coverage_code",
+    "submitter_no",
+    "patient_no",
+    "accident_no",
+    "provider_code",
+    "admission_date",
+    "discharge_date"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 1,
+  "max_targets": 1,
+  "key_property": "policy_id",
+  "system": "ins-intake",
+  "operation_id": "createReceipt",
+  "steps": [
+   {
+    "name": "intake",
+    "title": "접수 시스템 청구 접수 생성",
+    "system": "ins-intake",
+    "operation_id": "createReceipt",
+    "compensable": true
+   },
+   {
+    "name": "review",
+    "title": "심사 시스템 청구 등록",
+    "system": "ins-review",
+    "operation_id": "registerClaim",
+    "compensable": false
+   }
+  ]
+ },
+ {
+  "class": "ReviewTask",
+  "action": "resolveReviewTask",
+  "description": "미해결 심사 업무를 해결 처리한다(A06, 심사 시스템 resolveReviewTask). 대상은 청구(claim_id)의 status=OPEN 업무. 되돌리는 API 가 없어 보상하지 않는다. writeback 없음(응답 status 는 청구 상태라 업무 노드에 쓰지 않는다). 심사 업무는 보완 요청·평가 실행으로 생기므로 실행 전 listReviewTasks(claim_id)로 적재하고, 실행 후 listReviewTasks·getClaim 으로 다시 적재한다. 실행자는 담당 심사자 actor_id. 정책: scm_operator.",
+  "parameters": {
+   "type": "object",
+   "properties": {
+    "actor_id": {
+     "type": "string",
+     "description": "담당 심사자 ID (예: reviewer-01)"
+    },
+    "resolution": {
+     "type": "string",
+     "description": "해결 근거 (예: 보완 서류 확인)"
+    }
+   },
+   "required": [
+    "actor_id",
+    "resolution"
+   ]
+  },
+  "effect": "write",
+  "confirm_threshold": 1,
+  "max_targets": 10,
+  "key_property": "task_id",
+  "system": "ins-review",
+  "operation_id": "resolveReviewTask",
+  "steps": [
+   {
+    "name": "review",
+    "title": "심사 시스템 심사 업무 해결",
+    "system": "ins-review",
+    "operation_id": "resolveReviewTask",
+    "compensable": false
+   }
+  ]
+ }
+]

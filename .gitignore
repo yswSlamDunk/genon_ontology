@@ -1,0 +1,28 @@
+# OS / editor
+.DS_Store
+~$*
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.local.txt
+*credentials*.txt
+
+# Python / Node
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+
+# Nested git repos (tracked in their own GitHub repos)
+06_a2a_test/
+01_ontological-studio/repo/
+
+# Large binaries
+*.dmg
+02_research/protege/demo/protege-desktop/app/

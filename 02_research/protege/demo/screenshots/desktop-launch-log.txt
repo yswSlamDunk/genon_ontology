@@ -1,0 +1,6 @@
+2026-10-27 20:46:23.523 [main] INFO  Launcher    ----------------- Initialising and Starting the OSGi Framework -----------------
+2026-10-27 20:46:25.569 [AWT-EventQueue-0] INFO  OWLModelManagerImpl    Loading ontology from file:/Users/simpleisbest/Desktop/workplace/ontology/demo/samples/pizza.owl
+2026-10-27 20:46:36.252 [pool-3-thread-1] INFO  OntologyLoader    Finished loading file:/Users/simpleisbest/Desktop/workplace/ontology/demo/samples/pizza.owl
+2026-10-27 20:46:36.260 [AWT-EventQueue-0] INFO  OWLModelManagerImpl    Loading for ontology and imports closure successfully completed in 10691 ms
+2026-10-27 20:46:37.730 [AWT-EventQueue-0] INFO  OboFoundryRegistryManager    OBO Foundry registry loaded: 267 entries
+2026-10-27 20:46:37.782 [AWT-EventQueue-0] INFO  Bioregistry    Cached 1430 Bioregistry resources (2039 prefixes)
